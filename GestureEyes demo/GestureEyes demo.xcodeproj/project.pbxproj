@@ -22,6 +22,8 @@
 		A6753DC41864D2CD009DF83B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6753DA31864D2CD009DF83B /* UIKit.framework */; };
 		A6753DCC1864D2CE009DF83B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6753DCA1864D2CE009DF83B /* InfoPlist.strings */; };
 		A6753DCE1864D2CE009DF83B /* GestureEyes_demoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6753DCD1864D2CE009DF83B /* GestureEyes_demoTests.m */; };
+		A6753DD91864DE1F009DF83B /* GestureEyesAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = A6753DD81864DE1F009DF83B /* GestureEyesAnimator.m */; };
+		A6753DDD1864E133009DF83B /* GestureEyesCALayerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = A6753DDC1864E133009DF83B /* GestureEyesCALayerProxy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,10 @@
 		A6753DC91864D2CE009DF83B /* GestureEyes demoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GestureEyes demoTests-Info.plist"; sourceTree = "<group>"; };
 		A6753DCB1864D2CE009DF83B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A6753DCD1864D2CE009DF83B /* GestureEyes_demoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GestureEyes_demoTests.m; sourceTree = "<group>"; };
+		A6753DD71864DE1F009DF83B /* GestureEyesAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureEyesAnimator.h; path = ../../GestureEyes/GestureEyesAnimator.h; sourceTree = "<group>"; };
+		A6753DD81864DE1F009DF83B /* GestureEyesAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GestureEyesAnimator.m; path = ../../GestureEyes/GestureEyesAnimator.m; sourceTree = "<group>"; };
+		A6753DDB1864E133009DF83B /* GestureEyesCALayerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GestureEyesCALayerProxy.h; path = ../../GestureEyes/GestureEyesCALayerProxy.h; sourceTree = "<group>"; };
+		A6753DDC1864E133009DF83B /* GestureEyesCALayerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GestureEyesCALayerProxy.m; path = ../../GestureEyes/GestureEyesCALayerProxy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,7 @@
 				A6753DB81864D2CD009DF83B /* GestureEyesViewController.m */,
 				A6753DBA1864D2CD009DF83B /* Images.xcassets */,
 				A6753DA61864D2CD009DF83B /* Supporting Files */,
+				A6753DDA1864E0FD009DF83B /* GestureEyes */,
 			);
 			path = "GestureEyes demo";
 			sourceTree = "<group>";
@@ -153,6 +160,17 @@
 				A6753DCA1864D2CE009DF83B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6753DDA1864E0FD009DF83B /* GestureEyes */ = {
+			isa = PBXGroup;
+			children = (
+				A6753DD71864DE1F009DF83B /* GestureEyesAnimator.h */,
+				A6753DD81864DE1F009DF83B /* GestureEyesAnimator.m */,
+				A6753DDB1864E133009DF83B /* GestureEyesCALayerProxy.h */,
+				A6753DDC1864E133009DF83B /* GestureEyesCALayerProxy.m */,
+			);
+			name = GestureEyes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,8 +272,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6753DD91864DE1F009DF83B /* GestureEyesAnimator.m in Sources */,
 				A6753DB91864D2CD009DF83B /* GestureEyesViewController.m in Sources */,
 				A6753DB01864D2CD009DF83B /* GestureEyesAppDelegate.m in Sources */,
+				A6753DDD1864E133009DF83B /* GestureEyesCALayerProxy.m in Sources */,
 				A6753DAC1864D2CD009DF83B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

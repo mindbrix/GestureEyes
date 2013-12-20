@@ -8,8 +8,12 @@
 
 #import "GestureEyesViewController.h"
 
+#import "GestureEyesAnimator.h"
+
+
 @interface GestureEyesViewController ()
 
+@property( nonatomic, strong ) GestureEyesAnimator *animator;
 @property( nonatomic, strong ) UIScrollView *scrollView;
 
 @end
@@ -24,6 +28,10 @@
     self.scrollView = [[ UIScrollView alloc ] initWithFrame:self.view.bounds ];
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.scrollView ];
+    
+    self.animator = [[ GestureEyesAnimator alloc ] initWithFrame:self.view.bounds ];
+    self.animator.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [ self.view addSubview:self.animator ];
     
     [ self layoutViews ];
 }
