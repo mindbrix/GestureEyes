@@ -1,5 +1,5 @@
 //
-//  GestureEyesCALayerProxy.h
+//  GestureEyesAnimator.h
 //  GestureEyes demo
 //
 //  Created by Nigel Barber on 20/12/2013.
@@ -8,6 +8,8 @@
 
 @import UIKit;
 
-@interface GestureEyesCALayerProxy : CALayer
+#import "GestureEyesPathAnimationLayer.h"
+
+@interface GestureEyesAnimator : UIView<GestureEyesPathAnimationLayerDelegate>
 
 @end

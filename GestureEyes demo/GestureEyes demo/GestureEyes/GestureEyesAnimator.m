@@ -8,7 +8,6 @@
 
 #import "GestureEyesAnimator.h"
 
-#import "GestureEyesPathAnimationLayer.h"
 
 
 @interface GestureEyesAnimator ()
@@ -42,41 +41,19 @@
     CGPathMoveToPoint(curvedPath, NULL, viewOrigin.x, viewOrigin.y);
     CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x, viewOrigin.y, endPoint.x, viewOrigin.y, endPoint.x, endPoint.y);
     
-    
     GestureEyesPathAnimationLayer *animationLayer = [ GestureEyesPathAnimationLayer layer ];
-    
+    animationLayer.animationDelegate = self;
     [ self.layer addSublayer:animationLayer ];
-    
     [ animationLayer animateWithPath:curvedPath duration:2.0f ];
     
-    
     CGPathRelease(curvedPath);
-    
-    
-    
-    CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    pathAnimation.duration = 2.0f;
-    pathAnimation.calculationMode = kCAAnimationPaced;
-    pathAnimation.fillMode = kCAFillModeForwards;
-    pathAnimation.removedOnCompletion = NO;
-    //Setting Endpoint of the animation
-    pathAnimation.path = curvedPath;
-    
-    self.animationLayer = [ CALayer layer ];
-    
-    [ self.layer addSublayer:self.animationLayer ];
-    [ self.animationLayer addAnimation:pathAnimation forKey:@"savingAnimation"];
-    
-    NSTimer *pollTimer = [ NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(pollPosition:) userInfo:nil repeats:YES ];
-    [[ NSRunLoop currentRunLoop ] addTimer:pollTimer forMode:NSRunLoopCommonModes ];
 }
 
 
--(void)pollPosition:(id)sender
+-(void)pathLayerDidAnimate:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position
 {
-    CALayer *presentationLayer = self.animationLayer.presentationLayer;
-    
-    NSLog( @"position = %@", NSStringFromCGPoint( presentationLayer.position ) );
+    NSLog( @"position = %@", NSStringFromCGPoint( position ) );
 }
+
 
 @end
