@@ -20,20 +20,21 @@
 
 -(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration
 {
-    CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    CAKeyframeAnimation *pathAnimation = [ CAKeyframeAnimation animationWithKeyPath:@"position" ];
     pathAnimation.delegate = self;
     pathAnimation.duration = duration;
     pathAnimation.calculationMode = kCAAnimationPaced;
     pathAnimation.fillMode = kCAFillModeForwards;
     pathAnimation.removedOnCompletion = YES;
     pathAnimation.path = path;
+    //pathAnimation.repeatCount = HUGE_VALF;
     [ self addAnimation:pathAnimation forKey:@"savingAnimation"];
 }
 
 
 -(void)animationDidStart:(CAAnimation *)anim
 {
-    self.pollTimer = [ NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(pollPosition:) userInfo:nil repeats:YES ];
+    self.pollTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0f / 60.0f target:self selector:@selector(pollPosition:) userInfo:nil repeats:YES ];
     [[ NSRunLoop currentRunLoop ] addTimer:self.pollTimer forMode:NSRunLoopCommonModes ];
 }
 

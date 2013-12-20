@@ -9,7 +9,6 @@
 #import "GestureEyesAnimator.h"
 
 
-
 @interface GestureEyesAnimator ()
 
 @property( nonatomic, strong ) CALayer *animationLayer;
@@ -33,18 +32,18 @@
 
 -(void)test
 {
-    CGPoint endPoint = CGPointMake(480.0f - 30.0f, 240.0f);
-    //to end animation in last tab use
-    //CGPoint endPoint = CGPointMake( 320-40.0f, 480.0f);
+    self.backgroundColor = [ UIColor blackColor ];
+    
+    CGPoint endPoint = CGPointMake( self.bounds.size.width, self.bounds.size.height );
     CGMutablePathRef curvedPath = CGPathCreateMutable();
     CGPoint viewOrigin = CGPointZero;
     CGPathMoveToPoint(curvedPath, NULL, viewOrigin.x, viewOrigin.y);
-    CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x, viewOrigin.y, endPoint.x, viewOrigin.y, endPoint.x, endPoint.y);
+    CGPathAddLineToPoint(curvedPath, NULL, endPoint.x, endPoint.y);
     
     GestureEyesPathAnimationLayer *animationLayer = [ GestureEyesPathAnimationLayer layer ];
     animationLayer.animationDelegate = self;
     [ self.layer addSublayer:animationLayer ];
-    [ animationLayer animateWithPath:curvedPath duration:2.0f ];
+    [ animationLayer animateWithPath:curvedPath duration:0.333f ];
     
     CGPathRelease(curvedPath);
 }
@@ -52,8 +51,25 @@
 
 -(void)pathLayerDidAnimate:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position
 {
-    NSLog( @"position = %@", NSStringFromCGPoint( position ) );
+    //NSLog( @"position = %@", NSStringFromCGPoint( position ) );
+    
+    [ self addTrailAtPosition:position ];
 }
 
+
+-(void)addTrailAtPosition:(CGPoint)position
+{
+    UIView *trail = [[ UIView alloc ] initWithFrame:CGRectMake( 0, 0, 40, 40 )];
+    trail.backgroundColor = [ UIColor whiteColor ];
+    
+    [ self addSubview:trail ];
+    trail.center = position;
+    
+    [ UIView animateWithDuration:1.0f animations:^{
+        trail.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [ trail removeFromSuperview ];
+    }];
+}
 
 @end
