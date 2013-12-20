@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Nigel Barber (@mindbrix). All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface GestureEyesViewController : UIViewController
 
