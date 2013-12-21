@@ -36,21 +36,31 @@
 {
     self.pollTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0f / 60.0f target:self selector:@selector(pollPosition:) userInfo:nil repeats:YES ];
     [[ NSRunLoop currentRunLoop ] addTimer:self.pollTimer forMode:NSRunLoopCommonModes ];
+    
+    if([ self.animationDelegate respondsToSelector:@selector(pathLayerAnimationDidStart:)])
+    {
+        [ self.animationDelegate pathLayerAnimationDidStart:self ];
+    }
 }
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     [ self.pollTimer invalidate ];
+    
+    if([ self.animationDelegate respondsToSelector:@selector(pathLayerAnimationDidStop:)])
+    {
+        [ self.animationDelegate pathLayerAnimationDidStop:self ];
+    }
 }
 
 
 -(void)pollPosition:(id)sender
 {
-    if([ self.animationDelegate respondsToSelector:@selector(pathLayerDidAnimate:toPosition:)])
+    if([ self.animationDelegate respondsToSelector:@selector(pathLayerAnimationDidMove:toPosition:)])
     {
         CALayer *presentationLayer = self.presentationLayer;
         
-        [ self.animationDelegate pathLayerDidAnimate:self toPosition:presentationLayer.position ];
+        [ self.animationDelegate pathLayerAnimationDidMove:self toPosition:presentationLayer.position ];
     }
 }
 

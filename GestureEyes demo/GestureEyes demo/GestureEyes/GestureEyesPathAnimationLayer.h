@@ -13,7 +13,9 @@
 @protocol GestureEyesPathAnimationLayerDelegate <NSObject>
 
 @optional
--(void)pathLayerDidAnimate:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position;
+-(void)pathLayerAnimationDidStart:(GestureEyesPathAnimationLayer *)layer;
+-(void)pathLayerAnimationDidMove:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position;
+-(void)pathLayerAnimationDidStop:(GestureEyesPathAnimationLayer *)layer;
 
 @end
 

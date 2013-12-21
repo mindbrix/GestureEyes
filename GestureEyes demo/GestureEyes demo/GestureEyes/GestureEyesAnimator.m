@@ -66,7 +66,7 @@
 }
 
 
--(void)pathLayerDidAnimate:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position
+-(void)pathLayerAnimationDidMove:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position
 {
     //NSLog( @"position = %@", NSStringFromCGPoint( position ) );
     
