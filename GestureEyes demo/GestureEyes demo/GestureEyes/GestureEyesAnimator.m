@@ -51,12 +51,14 @@
 
 -(void)animatePaths:(NSArray *)paths withDurations:(NSArray *)durations intervals:(NSArray *)intervals index:(NSInteger)index
 {
+    NSParameterAssert( paths && paths.count && durations && durations.count && intervals && intervals.count );
+    
     if( index < paths.count )
     {
         UIBezierPath *path = [ paths objectAtIndex:index ];
         
-        CFTimeInterval duration = [[ durations objectAtIndex:0 ] doubleValue ];
-        NSTimeInterval interval = [[ intervals objectAtIndex:0 ] doubleValue ];
+        CFTimeInterval duration = [[ durations objectAtIndex:index % durations.count ] doubleValue ];
+        NSTimeInterval interval = [[ intervals objectAtIndex:index % intervals.count ] doubleValue ];
         
         [ self.animationLayer animateWithPath:path.CGPath duration:duration animation:^(CGPoint position) {
             
