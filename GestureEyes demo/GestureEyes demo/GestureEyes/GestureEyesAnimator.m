@@ -7,6 +7,7 @@
 //
 
 #import "GestureEyesAnimator.h"
+#import "UIBezierPath+GestureEyes.h"
 
 
 @interface GestureEyesAnimator ()
@@ -42,10 +43,24 @@
     CGPathMoveToPoint(curvedPath, NULL, viewOrigin.x, viewOrigin.y);
     CGPathAddLineToPoint(curvedPath, NULL, endPoint.x, endPoint.y);
     
+    NSArray *paths = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom ];
+    
+    
     GestureEyesPathAnimationLayer *animationLayer = [ GestureEyesPathAnimationLayer layer ];
     animationLayer.animationDelegate = self;
     [ self.layer addSublayer:animationLayer ];
-    [ animationLayer animateWithPath:curvedPath duration:0.333f ];
+    
+    if( paths.count )
+    {
+        UIBezierPath *path = [ paths objectAtIndex:0 ];
+        
+        [ animationLayer animateWithPath:path.CGPath duration:0.333f ];
+    }
+    else
+    {
+        [ animationLayer animateWithPath:curvedPath duration:0.333f ];
+    }
+    
     
     CGPathRelease(curvedPath);
 }

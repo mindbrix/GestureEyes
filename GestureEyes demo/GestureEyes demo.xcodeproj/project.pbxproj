@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A6434FD71864F6BF0047A071 /* GestureEyesAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = A6434FD41864F6BF0047A071 /* GestureEyesAnimator.m */; };
 		A6434FD81864F6BF0047A071 /* GestureEyesPathAnimationLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A6434FD61864F6BF0047A071 /* GestureEyesPathAnimationLayer.m */; };
+		A6434FDB18661EF90047A071 /* UIBezierPath+GestureEyes.m in Sources */ = {isa = PBXBuildFile; fileRef = A6434FDA18661EF90047A071 /* UIBezierPath+GestureEyes.m */; };
 		A6753DA01864D2CD009DF83B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6753D9F1864D2CD009DF83B /* Foundation.framework */; };
 		A6753DA21864D2CD009DF83B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6753DA11864D2CD009DF83B /* CoreGraphics.framework */; };
 		A6753DA41864D2CD009DF83B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6753DA31864D2CD009DF83B /* UIKit.framework */; };
@@ -41,6 +42,8 @@
 		A6434FD41864F6BF0047A071 /* GestureEyesAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureEyesAnimator.m; sourceTree = "<group>"; };
 		A6434FD51864F6BF0047A071 /* GestureEyesPathAnimationLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureEyesPathAnimationLayer.h; sourceTree = "<group>"; };
 		A6434FD61864F6BF0047A071 /* GestureEyesPathAnimationLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureEyesPathAnimationLayer.m; sourceTree = "<group>"; };
+		A6434FD918661EF90047A071 /* UIBezierPath+GestureEyes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+GestureEyes.h"; sourceTree = "<group>"; };
+		A6434FDA18661EF90047A071 /* UIBezierPath+GestureEyes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+GestureEyes.m"; sourceTree = "<group>"; };
 		A6753D9C1864D2CD009DF83B /* GestureEyes demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GestureEyes demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6753D9F1864D2CD009DF83B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A6753DA11864D2CD009DF83B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -94,6 +97,8 @@
 				A6434FD41864F6BF0047A071 /* GestureEyesAnimator.m */,
 				A6434FD51864F6BF0047A071 /* GestureEyesPathAnimationLayer.h */,
 				A6434FD61864F6BF0047A071 /* GestureEyesPathAnimationLayer.m */,
+				A6434FD918661EF90047A071 /* UIBezierPath+GestureEyes.h */,
+				A6434FDA18661EF90047A071 /* UIBezierPath+GestureEyes.m */,
 			);
 			path = GestureEyes;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				A6434FD81864F6BF0047A071 /* GestureEyesPathAnimationLayer.m in Sources */,
 				A6753DB01864D2CD009DF83B /* GestureEyesAppDelegate.m in Sources */,
 				A6753DAC1864D2CD009DF83B /* main.m in Sources */,
+				A6434FDB18661EF90047A071 /* UIBezierPath+GestureEyes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
