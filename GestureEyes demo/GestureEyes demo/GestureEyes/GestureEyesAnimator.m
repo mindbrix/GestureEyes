@@ -12,7 +12,7 @@
 @interface GestureEyesAnimator ()
 
 @property( nonatomic, strong ) CALayer *animationLayer;
-
+@property( nonatomic, assign ) CGFloat trailSize;
 @end
 
 
@@ -23,6 +23,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        
+        self.trailSize = 40.0f;
         
         [ self test ];
     }
@@ -59,11 +61,13 @@
 
 -(void)addTrailAtPosition:(CGPoint)position
 {
-    UIView *trail = [[ UIView alloc ] initWithFrame:CGRectMake( 0, 0, 40, 40 )];
+    UIView *trail = [[ UIView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, self.trailSize, self.trailSize )];
+    trail.layer.cornerRadius = self.trailSize / 2.0f;
+    trail.clipsToBounds = YES;
     trail.backgroundColor = [ UIColor whiteColor ];
-    
-    [ self addSubview:trail ];
     trail.center = position;
+    [ self addSubview:trail ];
+    
     
     [ UIView animateWithDuration:1.0f animations:^{
         trail.alpha = 0.0f;
