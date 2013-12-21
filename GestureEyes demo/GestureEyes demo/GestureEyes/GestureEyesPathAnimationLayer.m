@@ -10,6 +10,7 @@
 
 @interface GestureEyesPathAnimationLayer ()
 
+@property (nonatomic, copy) void (^animationBlock)(CGPoint position);
 @property (nonatomic, copy) void (^completionsBlock)(void);
 @property( nonatomic, assign ) NSTimer *pollTimer;
 
@@ -19,8 +20,9 @@
 
 @implementation GestureEyesPathAnimationLayer
 
--(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration completion:(void (^)(void))completionsBlock
+-(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration animation:(void (^)( CGPoint position ))animationBlock completion:(void (^)(void))completionsBlock
 {
+    self.animationBlock = animationBlock;
     self.completionsBlock = completionsBlock;
     
     CAKeyframeAnimation *pathAnimation = [ CAKeyframeAnimation animationWithKeyPath:@"position" ];
@@ -39,11 +41,6 @@
 {
     self.pollTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0f / 60.0f target:self selector:@selector(pollPosition:) userInfo:nil repeats:YES ];
     [[ NSRunLoop currentRunLoop ] addTimer:self.pollTimer forMode:NSRunLoopCommonModes ];
-    
-    if([ self.animationDelegate respondsToSelector:@selector(pathLayerAnimationDidStart:)])
-    {
-        [ self.animationDelegate pathLayerAnimationDidStart:self ];
-    }
 }
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
@@ -54,21 +51,16 @@
     {
         self.completionsBlock();
     }
-    
-    if([ self.animationDelegate respondsToSelector:@selector(pathLayerAnimationDidStop:)])
-    {
-        [ self.animationDelegate pathLayerAnimationDidStop:self ];
-    }
 }
 
 
 -(void)pollPosition:(id)sender
 {
-    if([ self.animationDelegate respondsToSelector:@selector(pathLayerAnimationDidMove:toPosition:)])
+    if( self.animationBlock )
     {
         CALayer *presentationLayer = self.presentationLayer;
         
-        [ self.animationDelegate pathLayerAnimationDidMove:self toPosition:presentationLayer.position ];
+        self.animationBlock( presentationLayer.position );
     }
 }
 

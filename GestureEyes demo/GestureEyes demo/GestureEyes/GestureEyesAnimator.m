@@ -29,7 +29,6 @@
         self.trailSize = 40.0f;
         
         self.animationLayer = [ GestureEyesPathAnimationLayer layer ];
-        self.animationLayer.animationDelegate = self;
         [ self.layer addSublayer:self.animationLayer ];
         
         [ self test ];
@@ -43,7 +42,7 @@
     self.backgroundColor = [ UIColor blackColor ];
     
     
-    NSArray *paths = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop ];
+    NSArray *paths = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeRight ];
     
     [ self animatePaths:paths withDurations:@[ @( 0.2 ) ] intervals:@[ @( 1.0 )] index:0 ];
 }
@@ -59,7 +58,11 @@
         CFTimeInterval duration = [[ durations objectAtIndex:0 ] doubleValue ];
         NSTimeInterval interval = [[ intervals objectAtIndex:0 ] doubleValue ];
         
-        [ self.animationLayer animateWithPath:path.CGPath duration:duration completion:^{
+        [ self.animationLayer animateWithPath:path.CGPath duration:duration animation:^(CGPoint position) {
+            
+            [ self addTrailAtPosition:position ];
+            
+        }  completion:^{
         
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, interval * 1000.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 
@@ -69,13 +72,6 @@
     }
 }
 
-
-#pragma mark - GestureEyesPathAnimationLayerDelegate
-
--(void)pathLayerAnimationDidMove:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position
-{
-    [ self addTrailAtPosition:position ];
-}
 
 
 #pragma mark - Trails

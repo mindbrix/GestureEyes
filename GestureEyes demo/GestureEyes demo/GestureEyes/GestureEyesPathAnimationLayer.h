@@ -8,22 +8,8 @@
 
 @import UIKit;
 
-@class GestureEyesPathAnimationLayer;
-
-@protocol GestureEyesPathAnimationLayerDelegate <NSObject>
-
-@optional
--(void)pathLayerAnimationDidStart:(GestureEyesPathAnimationLayer *)layer;
--(void)pathLayerAnimationDidMove:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position;
--(void)pathLayerAnimationDidStop:(GestureEyesPathAnimationLayer *)layer;
-
-@end
-
-
-
 @interface GestureEyesPathAnimationLayer : CALayer
 
-@property( nonatomic, assign ) id<GestureEyesPathAnimationLayerDelegate> animationDelegate;
--(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration completion:(void (^)(void))completionsBlock;
+-(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration animation:(void (^)( CGPoint position ))animationBlock completion:(void (^)(void))completionsBlock;
 
 @end

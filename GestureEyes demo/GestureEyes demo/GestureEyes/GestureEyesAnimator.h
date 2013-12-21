@@ -10,6 +10,6 @@
 
 #import "GestureEyesPathAnimationLayer.h"
 
-@interface GestureEyesAnimator : UIView<GestureEyesPathAnimationLayerDelegate>
+@interface GestureEyesAnimator : UIView 
 
 @end
