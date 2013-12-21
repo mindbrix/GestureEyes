@@ -14,9 +14,9 @@
 {
     NSMutableArray *paths = [ NSMutableArray new ];
     
-    UIRectEdge edgeMasks[] = { UIRectEdgeTop, UIRectEdgeRight, UIRectEdgeBottom, UIRectEdgeBottom };
+    UIRectEdge edgeMasks[] = { UIRectEdgeTop, UIRectEdgeRight, UIRectEdgeBottom, UIRectEdgeLeft };
     
-    for( NSInteger i = 0; i < sizeof( edgeMasks ); i++ )
+    for( NSInteger i = 0; i < 4; i++ )
     {
         UIRectEdge edgeMask = edgeMasks[ i ];
         

@@ -10,6 +10,7 @@
 
 @interface GestureEyesPathAnimationLayer ()
 
+@property (nonatomic, copy) void (^completionsBlock)(void);
 @property( nonatomic, assign ) NSTimer *pollTimer;
 
 @end
@@ -18,8 +19,10 @@
 
 @implementation GestureEyesPathAnimationLayer
 
--(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration
+-(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration completion:(void (^)(void))completionsBlock
 {
+    self.completionsBlock = completionsBlock;
+    
     CAKeyframeAnimation *pathAnimation = [ CAKeyframeAnimation animationWithKeyPath:@"position" ];
     pathAnimation.delegate = self;
     pathAnimation.duration = duration;
@@ -46,6 +49,11 @@
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     [ self.pollTimer invalidate ];
+    
+    if( self.completionsBlock )
+    {
+        self.completionsBlock();
+    }
     
     if([ self.animationDelegate respondsToSelector:@selector(pathLayerAnimationDidStop:)])
     {

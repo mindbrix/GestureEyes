@@ -12,7 +12,8 @@
 
 @interface GestureEyesAnimator ()
 
-@property( nonatomic, strong ) CALayer *animationLayer;
+@property( nonatomic, strong ) GestureEyesPathAnimationLayer *animationLayer;
+@property( nonatomic, assign ) NSInteger animationPathIndex;
 @property( nonatomic, assign ) CGFloat trailSize;
 @end
 
@@ -27,6 +28,10 @@
         
         self.trailSize = 40.0f;
         
+        self.animationLayer = [ GestureEyesPathAnimationLayer layer ];
+        self.animationLayer.animationDelegate = self;
+        [ self.layer addSublayer:self.animationLayer ];
+        
         [ self test ];
     }
     return self;
@@ -37,42 +42,43 @@
 {
     self.backgroundColor = [ UIColor blackColor ];
     
-    CGPoint endPoint = CGPointMake( self.bounds.size.width, self.bounds.size.height );
-    CGMutablePathRef curvedPath = CGPathCreateMutable();
-    CGPoint viewOrigin = CGPointZero;
-    CGPathMoveToPoint(curvedPath, NULL, viewOrigin.x, viewOrigin.y);
-    CGPathAddLineToPoint(curvedPath, NULL, endPoint.x, endPoint.y);
     
-    NSArray *paths = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom ];
+    NSArray *paths = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop ];
     
-    
-    GestureEyesPathAnimationLayer *animationLayer = [ GestureEyesPathAnimationLayer layer ];
-    animationLayer.animationDelegate = self;
-    [ self.layer addSublayer:animationLayer ];
-    
-    if( paths.count )
-    {
-        UIBezierPath *path = [ paths objectAtIndex:0 ];
-        
-        [ animationLayer animateWithPath:path.CGPath duration:0.333f ];
-    }
-    else
-    {
-        [ animationLayer animateWithPath:curvedPath duration:0.333f ];
-    }
-    
-    
-    CGPathRelease(curvedPath);
+    [ self animatePaths:paths withDurations:@[ @( 0.2 ) ] intervals:@[ @( 1.0 )] index:0 ];
 }
 
+
+
+-(void)animatePaths:(NSArray *)paths withDurations:(NSArray *)durations intervals:(NSArray *)intervals index:(NSInteger)index
+{
+    if( index < paths.count )
+    {
+        UIBezierPath *path = [ paths objectAtIndex:index ];
+        
+        CFTimeInterval duration = [[ durations objectAtIndex:0 ] doubleValue ];
+        NSTimeInterval interval = [[ intervals objectAtIndex:0 ] doubleValue ];
+        
+        [ self.animationLayer animateWithPath:path.CGPath duration:duration completion:^{
+        
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, interval * 1000.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                
+                [ self animatePaths:paths withDurations:durations intervals:intervals index:index + 1 ];
+            });
+        } ];
+    }
+}
+
+
+#pragma mark - GestureEyesPathAnimationLayerDelegate
 
 -(void)pathLayerAnimationDidMove:(GestureEyesPathAnimationLayer *)layer toPosition:(CGPoint)position
 {
-    //NSLog( @"position = %@", NSStringFromCGPoint( position ) );
-    
     [ self addTrailAtPosition:position ];
 }
 
+
+#pragma mark - Trails
 
 -(void)addTrailAtPosition:(CGPoint)position
 {

@@ -24,6 +24,6 @@
 @interface GestureEyesPathAnimationLayer : CALayer
 
 @property( nonatomic, assign ) id<GestureEyesPathAnimationLayerDelegate> animationDelegate;
--(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration;
+-(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration completion:(void (^)(void))completionsBlock;
 
 @end
