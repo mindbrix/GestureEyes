@@ -10,6 +10,30 @@
 
 @implementation UIBezierPath (GestureEyes)
 
++(NSArray *)rotationPathsForBounds:(CGRect)bounds
+{
+    NSMutableArray *paths = [ NSMutableArray new ];
+    
+    CGPoint centre = CGPointMake( bounds.size.width * 0.5f, bounds.size.height * 0.5f );
+    CGFloat radius = bounds.size.width * 0.25f;
+    
+    UIBezierPath *clockwisePath = [ UIBezierPath bezierPath ];
+    CGPoint startPoint = CGPointMake( bounds.size.width * 0.25f, bounds.size.height / 2.0f );
+    [ clockwisePath moveToPoint:startPoint ];
+    [ clockwisePath addArcWithCenter:centre radius:radius startAngle:M_PI endAngle:M_PI - 0.01 clockwise:YES ];
+    
+    UIBezierPath *anticlockwisePath = [ UIBezierPath bezierPath ];
+    startPoint = CGPointMake( bounds.size.width * 0.75f, bounds.size.height / 2.0f );
+    [ anticlockwisePath moveToPoint:startPoint ];
+    [ anticlockwisePath addArcWithCenter:centre radius:radius startAngle:0.0f endAngle: 0.01f clockwise:NO ];
+    
+    [ paths addObject:clockwisePath ];
+    [ paths addObject:anticlockwisePath ];
+    
+    return [[ NSArray alloc ] initWithArray:paths ];
+}
+
+
 +(NSArray *)swipePathsForBounds:(CGRect)bounds direction:(UISwipeGestureRecognizerDirection)direction numberOfTouchesRequired:(NSInteger)numberOfTouchesRequired
 {
     NSMutableArray *paths = [ NSMutableArray new ];
