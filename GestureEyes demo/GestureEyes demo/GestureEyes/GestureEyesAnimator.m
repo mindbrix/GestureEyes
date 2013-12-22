@@ -12,8 +12,8 @@
 
 @interface GestureEyesAnimator ()
 
-@property( nonatomic, strong ) GestureEyesPathAnimationLayer *animationLayer;
 @property( nonatomic, assign ) CGFloat trailSize;
+
 @end
 
 
@@ -22,13 +22,11 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    if (self)
+    {
+        self.backgroundColor = [ UIColor blackColor ];
         
         self.trailSize = 40.0f;
-        
-        self.animationLayer = [ GestureEyesPathAnimationLayer layer ];
-        [ self.layer addSublayer:self.animationLayer ];
         
         [ self test ];
         
@@ -41,20 +39,37 @@
 
 -(void)test
 {
-    self.backgroundColor = [ UIColor blackColor ];
+    GestureEyesPathAnimationLayer *animationLayer0 = [ GestureEyesPathAnimationLayer layer ];
+    [ self.layer addSublayer:animationLayer0 ];
     
+    NSArray *paths0 = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeRight ];
     
-    NSArray *paths = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeRight ];
-    
-    [ self.animationLayer animatePaths:paths withDurations:@[ @( 0.2 )] intervals:@[ @( 1.0 )] animation:^(CGPoint position) {
+    [ animationLayer0 animatePaths:paths0 withDurations:@[ @( 0.2 )] intervals:@[ @( 1.0 )] animation:^(CGPoint position) {
         
         [ self addTrailAtPosition:position ];
         
     } completion:^{
-        ;
+        [ animationLayer0 removeFromSuperlayer ];
+    }];
+    
+    
+    
+    GestureEyesPathAnimationLayer *animationLayer1 = [ GestureEyesPathAnimationLayer layer ];
+    [ self.layer addSublayer:animationLayer1 ];
+    
+    NSArray *paths1 = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeRight ];
+    
+    [ animationLayer1 animatePaths:paths1 withDurations:@[ @( 0.2 )] intervals:@[ @( 1.0 )] animation:^(CGPoint position) {
+        
+        [ self addTrailAtPosition:position ];
+        
+    } completion:^{
+        [ animationLayer1 removeFromSuperlayer ];
     }];
 }
 
+
+#pragma mark - Pan gestures
 
 -(void)panGestureRecognizerDidFire:(UIPanGestureRecognizer *)pan
 {
@@ -62,6 +77,7 @@
     
     [ self addTrailAtPosition:location ];
 }
+
 
 #pragma mark - Trails
 
