@@ -10,6 +10,37 @@
 
 @implementation UIBezierPath (GestureEyes)
 
++(NSArray *)pinchPathsForBounds:(CGRect)bounds
+{
+    NSMutableArray *paths = [ NSMutableArray new ];
+    
+    CGPoint centre = CGPointMake( bounds.size.width * 0.5f, bounds.size.height * 0.5f );
+    CGFloat radius = bounds.size.width * 0.25f;
+    
+    CGFloat outerRatio = 1.0f;
+    CGFloat innerRatio = 0.2f;
+    CGSize outerVector = CGSizeMake( radius * outerRatio, radius * outerRatio );
+    CGSize innerVector = CGSizeMake( radius *innerRatio, radius * innerRatio );
+    
+    UIBezierPath *path0 = [ UIBezierPath bezierPath ];
+    CGPoint startPoint = CGPointMake( centre.x - outerVector.width, centre.y + outerVector.height );
+    CGPoint endPoint = CGPointMake( centre.x - innerVector.width, centre.y + innerVector.height );
+    [ path0 moveToPoint:startPoint ];
+    [ path0 addLineToPoint:endPoint ];
+    
+    UIBezierPath *path1 = [ UIBezierPath bezierPath ];
+    startPoint = CGPointMake( centre.x + outerVector.width, centre.y - outerVector.height );
+    endPoint = CGPointMake( centre.x + innerVector.width, centre.y - innerVector.height );
+    [ path1 moveToPoint:startPoint ];
+    [ path1 addLineToPoint:endPoint ];
+    
+    [ paths addObject:path0 ];
+    [ paths addObject:path1 ];
+    
+    return [[ NSArray alloc ] initWithArray:paths ];
+}
+
+
 +(NSArray *)rotationPathsForBounds:(CGRect)bounds
 {
     NSMutableArray *paths = [ NSMutableArray new ];

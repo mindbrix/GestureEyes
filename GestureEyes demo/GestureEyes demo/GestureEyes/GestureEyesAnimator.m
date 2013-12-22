@@ -39,11 +39,15 @@
 
 -(void)test
 {
+    NSArray *pinchPaths = [ UIBezierPath pinchPathsForBounds:self.bounds ];
+    [ self animateSimultaneouslyWithPaths:pinchPaths duration:2.0f ];
+    
+    /*
     NSArray *rotationPaths = [ UIBezierPath rotationPathsForBounds:self.bounds ];
     [ self animateSimultaneouslyWithPaths:rotationPaths duration:2.0f ];
     
     
-   /*
+   
     GestureEyesPathAnimationLayer *animationLayer0 = [ GestureEyesPathAnimationLayer layer ];
     [ self.layer addSublayer:animationLayer0 ];
     
@@ -120,7 +124,7 @@
     [ self addSubview:trail ];
     
     
-    [ UIView animateWithDuration:1.0f animations:^{
+    [ UIView animateWithDuration:0.5f animations:^{
         trail.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [ trail removeFromSuperview ];
