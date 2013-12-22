@@ -12,8 +12,6 @@
 
 +(NSArray *)pinchPathsForBounds:(CGRect)bounds
 {
-    NSMutableArray *paths = [ NSMutableArray new ];
-    
     CGPoint centre = CGPointMake( bounds.size.width * 0.5f, bounds.size.height * 0.5f );
     CGFloat radius = bounds.size.width * 0.25f;
     
@@ -34,34 +32,26 @@
     [ path1 moveToPoint:startPoint ];
     [ path1 addLineToPoint:endPoint ];
     
-    [ paths addObject:path0 ];
-    [ paths addObject:path1 ];
-    
-    return [[ NSArray alloc ] initWithArray:paths ];
+    return @[ path0, path1 ];
 }
 
 
 +(NSArray *)rotationPathsForBounds:(CGRect)bounds
 {
-    NSMutableArray *paths = [ NSMutableArray new ];
-    
     CGPoint centre = CGPointMake( bounds.size.width * 0.5f, bounds.size.height * 0.5f );
     CGFloat radius = bounds.size.width * 0.25f;
     
-    UIBezierPath *clockwisePath = [ UIBezierPath bezierPath ];
+    UIBezierPath *path0 = [ UIBezierPath bezierPath ];
     CGPoint startPoint = CGPointMake( bounds.size.width * 0.25f, bounds.size.height / 2.0f );
-    [ clockwisePath moveToPoint:startPoint ];
-    [ clockwisePath addArcWithCenter:centre radius:radius startAngle:M_PI endAngle:M_PI - 0.01 clockwise:YES ];
+    [ path0 moveToPoint:startPoint ];
+    [ path0 addArcWithCenter:centre radius:radius startAngle:M_PI endAngle:M_PI - 0.01 clockwise:YES ];
     
-    UIBezierPath *anticlockwisePath = [ UIBezierPath bezierPath ];
+    UIBezierPath *path1 = [ UIBezierPath bezierPath ];
     startPoint = CGPointMake( bounds.size.width * 0.75f, bounds.size.height / 2.0f );
-    [ anticlockwisePath moveToPoint:startPoint ];
-    [ anticlockwisePath addArcWithCenter:centre radius:radius startAngle:0.0f endAngle: -0.01f clockwise:YES ];
+    [ path1 moveToPoint:startPoint ];
+    [ path1 addArcWithCenter:centre radius:radius startAngle:0.0f endAngle: -0.01f clockwise:YES ];
     
-    [ paths addObject:clockwisePath ];
-    [ paths addObject:anticlockwisePath ];
-    
-    return [[ NSArray alloc ] initWithArray:paths ];
+    return @[ path0, path1 ];
 }
 
 
