@@ -13,7 +13,6 @@
 @interface GestureEyesAnimator ()
 
 @property( nonatomic, strong ) GestureEyesPathAnimationLayer *animationLayer;
-@property( nonatomic, assign ) NSInteger animationPathIndex;
 @property( nonatomic, assign ) CGFloat trailSize;
 @end
 
@@ -47,12 +46,12 @@
     
     NSArray *paths = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeRight ];
     
-    [ self animatePaths:paths withDurations:@[ @( 0.2 ) ] intervals:@[ @( 1.0 )] index:0 ];
+    [ self animatePaths:paths withDurations:@[ @( 0.2 )] intervals:@[ @( 1.0 )] index:0 layer:self.animationLayer ];
 }
 
 
 
--(void)animatePaths:(NSArray *)paths withDurations:(NSArray *)durations intervals:(NSArray *)intervals index:(NSInteger)index
+-(void)animatePaths:(NSArray *)paths withDurations:(NSArray *)durations intervals:(NSArray *)intervals index:(NSInteger)index layer:(GestureEyesPathAnimationLayer *)layer
 {
     NSParameterAssert( paths && paths.count && durations && durations.count && intervals && intervals.count );
     
@@ -63,7 +62,7 @@
         CFTimeInterval duration = [[ durations objectAtIndex:index % durations.count ] doubleValue ];
         NSTimeInterval interval = [[ intervals objectAtIndex:index % intervals.count ] doubleValue ];
         
-        [ self.animationLayer animateWithPath:path.CGPath duration:duration animation:^(CGPoint position) {
+        [ layer animateWithPath:path.CGPath duration:duration animation:^(CGPoint position) {
             
             [ self addTrailAtPosition:position ];
             
@@ -71,7 +70,7 @@
         
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, interval * 1000.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 
-                [ self animatePaths:paths withDurations:durations intervals:intervals index:index + 1 ];
+                [ self animatePaths:paths withDurations:durations intervals:intervals index:index + 1 layer:layer ];
             });
         } ];
     }
