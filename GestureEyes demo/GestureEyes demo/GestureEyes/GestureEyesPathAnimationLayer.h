@@ -10,6 +10,6 @@
 
 @interface GestureEyesPathAnimationLayer : CALayer
 
--(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration animation:(void (^)( CGPoint position ))animationBlock completion:(void (^)(void))completionsBlock;
+-(void)animatePaths:(NSArray *)paths withDurations:(NSArray *)durations intervals:(NSArray *)intervals animation:(void (^)( CGPoint position ))animationBlock completion:(void (^)(void))completionsBlock;
 
 @end

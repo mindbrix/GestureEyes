@@ -14,17 +14,48 @@
 @property (nonatomic, copy) void (^completionsBlock)(void);
 @property( nonatomic, assign ) NSTimer *pollTimer;
 
+@property( nonatomic, assign ) NSInteger index;
+
+@property( nonatomic, strong ) NSArray *paths;
+@property( nonatomic, strong ) NSArray *durations;
+@property( nonatomic, strong ) NSArray *intervals;
+
 @end
 
 
 
 @implementation GestureEyesPathAnimationLayer
 
--(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration animation:(void (^)( CGPoint position ))animationBlock completion:(void (^)(void))completionsBlock
+
+-(void)animatePaths:(NSArray *)paths withDurations:(NSArray *)durations intervals:(NSArray *)intervals animation:(void (^)( CGPoint position ))animationBlock completion:(void (^)(void))completionsBlock
 {
+    self.index = 0;
+    self.paths = paths;
+    self.durations = durations;
+    self.intervals = intervals;
+    
     self.animationBlock = animationBlock;
     self.completionsBlock = completionsBlock;
     
+    [ self nextAnimation ];
+}
+
+
+-(void)nextAnimation
+{
+    if( self.index < self.paths.count )
+    {
+        UIBezierPath *path = [ self.paths objectAtIndex:self.index ];
+        
+        CFTimeInterval duration = [[ self.durations objectAtIndex:self.index % self.durations.count ] doubleValue ];
+        
+        [ self animateWithPath:path.CGPath duration:duration ];
+    }
+}
+
+
+-(void)animateWithPath:(CGPathRef)path duration:(CFTimeInterval)duration
+{
     CAKeyframeAnimation *pathAnimation = [ CAKeyframeAnimation animationWithKeyPath:@"position" ];
     pathAnimation.delegate = self;
     pathAnimation.duration = duration;
@@ -50,9 +81,23 @@
 {
     [ self.pollTimer invalidate ];
     
-    if( self.completionsBlock )
+    self.index++;
+    
+    if( self.index < self.paths.count )
     {
-        self.completionsBlock();
+        NSTimeInterval interval = [[ self.intervals objectAtIndex:self.index % self.intervals.count ] doubleValue ];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, interval * 1000.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            
+            [ self nextAnimation ];
+        });
+    }
+    else
+    {
+        if( self.completionsBlock )
+        {
+            self.completionsBlock();
+        }
     }
 }
 
