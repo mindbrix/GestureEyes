@@ -32,6 +32,9 @@
         [ self.layer addSublayer:self.animationLayer ];
         
         [ self test ];
+        
+        UIPanGestureRecognizer *pan = [[ UIPanGestureRecognizer alloc ] initWithTarget:self action:@selector(panGestureRecognizerDidFire:)];
+        [ self addGestureRecognizer:pan ];
     }
     return self;
 }
@@ -76,12 +79,21 @@
 
 
 
+-(void)panGestureRecognizerDidFire:(UIPanGestureRecognizer *)pan
+{
+    CGPoint location = [ pan locationInView:self ];
+    
+    [ self addTrailAtPosition:location ];
+}
+
 #pragma mark - Trails
 
 -(void)addTrailAtPosition:(CGPoint)position
 {
     UIView *trail = [[ UIView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, self.trailSize, self.trailSize )];
     trail.layer.cornerRadius = self.trailSize / 2.0f;
+    trail.layer.shouldRasterize = YES;
+    trail.layer.rasterizationScale = [ UIScreen mainScreen ].scale;
     trail.clipsToBounds = YES;
     trail.backgroundColor = [ UIColor whiteColor ];
     trail.center = position;
