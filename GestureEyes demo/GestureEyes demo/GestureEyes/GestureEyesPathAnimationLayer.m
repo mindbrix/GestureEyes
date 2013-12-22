@@ -39,8 +39,11 @@
 
 -(void)animationDidStart:(CAAnimation *)anim
 {
-    self.pollTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0f / 60.0f target:self selector:@selector(pollPosition:) userInfo:nil repeats:YES ];
-    [[ NSRunLoop currentRunLoop ] addTimer:self.pollTimer forMode:NSRunLoopCommonModes ];
+    dispatch_async( dispatch_get_main_queue(), ^{
+        self.pollTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0f / 60.0f target:self selector:@selector(pollPosition:) userInfo:nil repeats:YES ];
+        [[ NSRunLoop currentRunLoop ] addTimer:self.pollTimer forMode:NSRunLoopCommonModes ];
+    });
+    
 }
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
