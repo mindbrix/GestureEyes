@@ -10,7 +10,59 @@
 
 @implementation UIBezierPath (GestureEyes)
 
-+(NSArray *)edgeSwipePathsForBounds:(CGRect)bounds edges:(UIRectEdge)edges
++(NSArray *)swipePathsForBounds:(CGRect)bounds direction:(UISwipeGestureRecognizerDirection)direction numberOfTouchesRequired:(NSInteger)numberOfTouchesRequired
+{
+    NSMutableArray *paths = [ NSMutableArray new ];
+    
+    UIBezierPath *path = [ self swipePathForBounds:bounds direction:direction ];
+    
+    
+    [ paths addObject:path ];
+    
+    return [[ NSArray alloc ] initWithArray:paths ];
+}
+
+
++(UIBezierPath *)swipePathForBounds:(CGRect)bounds direction:(UISwipeGestureRecognizerDirection)direction
+{
+    CGPoint startPoint = CGPointZero;
+    CGPoint endPoint = CGPointZero;
+    
+    if( direction & UISwipeGestureRecognizerDirectionRight )
+    {
+        startPoint = CGPointMake( bounds.size.width * 0.25f, bounds.size.height / 2.0f );
+        endPoint = CGPointMake( bounds.size.width * 0.75f, startPoint.y );
+    }
+    else if( direction & UISwipeGestureRecognizerDirectionLeft )
+    {
+        startPoint = CGPointMake( bounds.size.width * 0.75f, bounds.size.height / 2.0f );
+        endPoint = CGPointMake( bounds.size.width * 0.25f, startPoint.y );
+    }
+    else if( direction & UISwipeGestureRecognizerDirectionDown )
+    {
+        startPoint = CGPointMake( bounds.size.width / 2.0f, bounds.size.height * 0.25f );
+        endPoint = CGPointMake( startPoint.x, bounds.size.height * 0.75f );
+    }
+    else if( direction & UISwipeGestureRecognizerDirectionUp )
+    {
+        startPoint = CGPointMake( bounds.size.width / 2.0f, bounds.size.height * 0.75f );
+        endPoint = CGPointMake( startPoint.x, bounds.size.height * 0.25f );
+    }
+    
+    if( startPoint.x == endPoint.x && startPoint.y == endPoint.y )
+    {
+        return nil;
+    }
+    
+    UIBezierPath *path = [ UIBezierPath bezierPath ];
+    [ path moveToPoint:startPoint ];
+    [ path addLineToPoint:endPoint ];
+    
+    return path;
+}
+
+
++(NSArray *)edgePanPathsForBounds:(CGRect)bounds edges:(UIRectEdge)edges
 {
     NSMutableArray *paths = [ NSMutableArray new ];
     
@@ -20,7 +72,7 @@
     {
         UIRectEdge edgeMask = edgeMasks[ i ];
         
-        UIBezierPath *path = [ UIBezierPath edgeSwipePathsForBounds:bounds edge:edges & edgeMask ];
+        UIBezierPath *path = [ UIBezierPath edgePanPathForBounds:bounds edge:edges & edgeMask ];
         
         if( path )
         {
@@ -32,7 +84,7 @@
 }
 
 
-+(UIBezierPath *)edgeSwipePathsForBounds:(CGRect)bounds edge:(UIRectEdge)edge
++(UIBezierPath *)edgePanPathForBounds:(CGRect)bounds edge:(UIRectEdge)edge
 {
     CGPoint endPoint = CGPointMake( bounds.size.width / 2.0f, bounds.size.height / 2.0f );
     

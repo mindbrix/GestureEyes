@@ -10,6 +10,8 @@
 
 @interface UIBezierPath (GestureEyes)
 
-+(NSArray *)edgeSwipePathsForBounds:(CGRect)bounds edges:(UIRectEdge)edges;
++(NSArray *)swipePathsForBounds:(CGRect)bounds direction:(UISwipeGestureRecognizerDirection)direction numberOfTouchesRequired:(NSInteger)numberOfTouchesRequired;
+
++(NSArray *)edgePanPathsForBounds:(CGRect)bounds edges:(UIRectEdge)edges;
 
 @end

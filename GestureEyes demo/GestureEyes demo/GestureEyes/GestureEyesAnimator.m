@@ -42,7 +42,8 @@
     GestureEyesPathAnimationLayer *animationLayer0 = [ GestureEyesPathAnimationLayer layer ];
     [ self.layer addSublayer:animationLayer0 ];
     
-    NSArray *paths0 = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeRight ];
+    NSArray *paths0 = [ UIBezierPath swipePathsForBounds:self.bounds direction:UISwipeGestureRecognizerDirectionUp  numberOfTouchesRequired:1 ];
+    //NSArray *paths0 = [ UIBezierPath edgePanPathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeRight ];
     
     [ animationLayer0 animatePaths:paths0 withDurations:@[ @( 0.2 )] intervals:@[ @( 1.0 )] animation:^(CGPoint position) {
         
@@ -57,7 +58,8 @@
     GestureEyesPathAnimationLayer *animationLayer1 = [ GestureEyesPathAnimationLayer layer ];
     [ self.layer addSublayer:animationLayer1 ];
     
-    NSArray *paths1 = [ UIBezierPath edgeSwipePathsForBounds:self.bounds edges:UIRectEdgeRight ];
+    NSArray *paths1 = [ UIBezierPath swipePathsForBounds:self.bounds direction:UISwipeGestureRecognizerDirectionRight  numberOfTouchesRequired:1 ];
+    //NSArray *paths1 = [ UIBezierPath edgePanPathsForBounds:self.bounds edges:UIRectEdgeRight ];
     
     [ animationLayer1 animatePaths:paths1 withDurations:@[ @( 0.2 )] intervals:@[ @( 1.0 )] animation:^(CGPoint position) {
         
