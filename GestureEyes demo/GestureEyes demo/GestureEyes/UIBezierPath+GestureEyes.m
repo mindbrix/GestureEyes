@@ -25,7 +25,7 @@
     UIBezierPath *anticlockwisePath = [ UIBezierPath bezierPath ];
     startPoint = CGPointMake( bounds.size.width * 0.75f, bounds.size.height / 2.0f );
     [ anticlockwisePath moveToPoint:startPoint ];
-    [ anticlockwisePath addArcWithCenter:centre radius:radius startAngle:0.0f endAngle: 0.01f clockwise:NO ];
+    [ anticlockwisePath addArcWithCenter:centre radius:radius startAngle:0.0f endAngle: -0.01f clockwise:YES ];
     
     [ paths addObject:clockwisePath ];
     [ paths addObject:anticlockwisePath ];

@@ -39,11 +39,15 @@
 
 -(void)test
 {
+    NSArray *rotationPaths = [ UIBezierPath rotationPathsForBounds:self.bounds ];
+    [ self animateSimultaneouslyWithPaths:rotationPaths duration:2.0f ];
+    
+    
+   /*
     GestureEyesPathAnimationLayer *animationLayer0 = [ GestureEyesPathAnimationLayer layer ];
     [ self.layer addSublayer:animationLayer0 ];
     
-    NSArray *paths0 = [ UIBezierPath rotationPathsForBounds:self.bounds ];
-    //NSArray *paths0 = [ UIBezierPath swipePathsForBounds:self.bounds direction:UISwipeGestureRecognizerDirectionUp  numberOfTouchesRequired:1 ];
+    NSArray *paths0 = [ UIBezierPath swipePathsForBounds:self.bounds direction:UISwipeGestureRecognizerDirectionUp  numberOfTouchesRequired:1 ];
     //NSArray *paths0 = [ UIBezierPath edgePanPathsForBounds:self.bounds edges:UIRectEdgeBottom | UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeRight ];
     
     [ animationLayer0 animatePaths:paths0 withDurations:@[ @( 2.2 )] intervals:@[ @( 1.0 )] animation:^(CGPoint position) {
@@ -54,7 +58,7 @@
         [ animationLayer0 removeFromSuperlayer ];
     }];
     
-    /*
+    
     
     GestureEyesPathAnimationLayer *animationLayer1 = [ GestureEyesPathAnimationLayer layer ];
     [ self.layer addSublayer:animationLayer1 ];
@@ -69,7 +73,26 @@
     } completion:^{
         [ animationLayer1 removeFromSuperlayer ];
     }];
-     */
+      */
+}
+
+
+
+-(void)animateSimultaneouslyWithPaths:(NSArray *)paths duration:(NSTimeInterval)duration
+{
+    for( UIBezierPath *path in paths )
+    {
+        GestureEyesPathAnimationLayer *animationLayer = [ GestureEyesPathAnimationLayer layer ];
+        [ self.layer addSublayer:animationLayer ];
+        
+        [ animationLayer animatePaths:@[ path ] withDurations:@[ @( duration )] intervals:@[ @( 1.0 )] animation:^(CGPoint position) {
+            
+            [ self addTrailAtPosition:position ];
+            
+        } completion:^{
+            [ animationLayer removeFromSuperlayer ];
+        }];
+    }
 }
 
 
